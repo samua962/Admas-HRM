@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="Admas_HRM2.Payroll"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="850"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#2980B9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="RowHeight" Value="40"/>
+            <Setter Property="AlternatingRowBackground" Value="#F0F0F0"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="RowHeaderWidth" Value="30"/>
+
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#CCCCCC"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#D1E8FF"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="RowHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRowHeader">
+                        <Setter Property="Background" Value="#EAEAEA"/>
+                        <Setter Property="BorderBrush" Value="#CCCCCC"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#2980B9"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#CCCCCC"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#2980b9" Offset="0"/>
+            <GradientStop Color="#6dd5fa" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <Grid Background="White" Margin="20">
+        <!-- Grid Rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header Title -->
+        <Border Background="{StaticResource HeaderGradient}" CornerRadius="5" Padding="15" Grid.Row="0">
+            <TextBlock Text="Manage Employee Payroll" FontSize="26" FontWeight="Bold" Foreground="White"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- Search Panel -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Margin="0,10,10,10">
+            <!-- Search TextBox -->
+            <TextBox x:Name="txtSearch" Width="250" Height="35" Margin="0,0,10,0" />
+
+            <!-- Search Button -->
+            <Button Content="🔍 Search" Width="100" Height="35" Foreground="White" Margin="0,0,10,0"
+                    Background="#3498DB" Click="btnSearch_Click"/>
+        </StackPanel>
+
+        <!-- Employee Payroll DataGrid -->
+        <DataGrid x:Name="dataGridPayroll" AutoGenerateColumns="False" Grid.Row="2"
+                  SelectionMode="Single" CanUserAddRows="False" HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" Margin="0,10,0,0" SelectionChanged="dataGridPayroll_SelectionChanged"
+                  HeadersVisibility="Column" BorderBrush="#CCCCCC" BorderThickness="1"
+                  RowBackground="White" AlternatingRowBackground="#F5F5F5" GridLinesVisibility="None"
+                  FontSize="14" IsReadOnly="True">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Employee ID" Binding="{Binding EmployeeID}" Width="150"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="200"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="200"/>
+                <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="150"/>
+                <DataGridTextColumn Header="Position" Binding="{Binding Role}" Width="150"/>
+                <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" Width="150"/>
+
+                <!-- View Details and Pay Buttons -->
+                <DataGridTemplateColumn Header="Actions" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <!-- Details Button -->
+                                <Button Content="🔍 Details" Background="#2ECC71" Foreground="White"
+                                        Padding="5,3" Width="70" Height="30" Cursor="Hand"
+                                        BorderThickness="0" Tag="{Binding}" Click="Detail_click"
+                                        Margin="0,0,5,0"/>
+
+                                <!-- Pay Button -->
+                                <Button Content="💳 Pay" Background="#E67E22" Foreground="White"
+                                        Padding="5,3" Width="70" Height="30" Cursor="Hand"
+                                        BorderThickness="0" Tag="{Binding}" Click="Pay_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

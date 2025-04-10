@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="Admas_HRM2.Dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             Background="White">
+
+
+        <Grid >
+            <!-- TOP SECTION -->
+            <Grid VerticalAlignment="Top" Height="100">
+                <Border Background="White" CornerRadius="12" Padding="15" Margin="0,0,0,20">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#C2C2C2" BlurRadius="12" ShadowDepth="2"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Welcome, HR Manager!" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="CurrentDate" Grid.Column="1" FontSize="16" Foreground="#7F8C8D" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- METRICS SECTION -->
+        <Grid VerticalAlignment="Top" Margin="0,80,0,0">
+            <TextBlock Text="HR Manager Dashboard" FontSize="26" FontWeight="Bold" Foreground="#2C3E50" Margin="10,20,0,10"/>
+
+            <UniformGrid Columns="4" Margin="10,80,10,0" HorizontalAlignment="Stretch">
+                <!-- Employee Count -->
+                <Border Margin="10" Padding="20" Height="130" CornerRadius="12" Background="#2980B9"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                MinWidth="200" MaxWidth="300">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Foreground="White" FontSize="18" Text="Total Employees"/>
+                        <TextBlock x:Name="txtTotalEmployee" Text="0" FontSize="25" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Payroll Overview -->
+                <Border Margin="10" Padding="20" Height="130" CornerRadius="12" Background="#27AE60"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                MinWidth="200" MaxWidth="300">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Foreground="White" FontSize="18" Text="Total Payroll     "/>
+                        <TextBlock x:Name="txtTotalPayroll" Text="0" FontSize="25" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Foreground="White" Margin="0,-7" FontSize="15" Text="birr"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Department Count -->
+                <Border Margin="10" Padding="20" Height="130" CornerRadius="12" Background="#8E44AD"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                MinWidth="200" MaxWidth="300">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Foreground="White" FontSize="18" Text="Total Departments"/>
+                        <TextBlock x:Name="txtTotalDepartments" Text="0" FontSize="25" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Performance Overview -->
+                <Border Margin="10" Padding="20" Height="130" CornerRadius="12" Background="#E74C3C"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                MinWidth="200" MaxWidth="300">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Foreground="White" FontSize="18" Text="Performance Reviews"/>
+                        <TextBlock Text="87%" FontSize="25" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+        </Grid>
+
+        <!-- CHARTS SECTION -->
+            <Grid Margin="0,300,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- PIE CHART (Donut Style) -->
+                <Border Grid.Column="0" Background="White" Padding="20" CornerRadius="12" Margin="10">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#f5f7f6" BlurRadius="20" ShadowDepth="6"/>
+                    </Border.Effect>
+
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Department Distribution" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+
+                        <Viewbox Height="400" Width="auto">
+                            <lvc:PieChart LegendLocation="Right" Width="380" Height="380" InnerRadius="80"  RenderTransformOrigin="0.526,0.526">
+                                <lvc:PieChart Series="{Binding DepartmentSeries}" LegendLocation="Right">
+                                    <lvc:PieChart.DataTooltip>
+                                        <lvc:DefaultTooltip />
+                                    </lvc:PieChart.DataTooltip>
+                                </lvc:PieChart>
+                            </lvc:PieChart>
+                        </Viewbox>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="White" Padding="20" CornerRadius="12" Margin="10">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#f5f7f6" BlurRadius="20" ShadowDepth="6"/>
+                    </Border.Effect>
+
+                    <StackPanel>
+                        <TextBlock Text="Departmental Salary Expenses" FontSize="20" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,15"/>
+
+                        <lvc:CartesianChart Height="300" Width="auto">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries Title="Total Payroll"
+                                  Values="{Binding PayrollSeries[0].Values}" 
+                                  Fill="DodgerBlue"
+                                  DataLabels="True"/>
+                            </lvc:CartesianChart.Series>
+
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Departments" 
+                          Labels="{Binding PayrollDepartmentNames}" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                            </lvc:CartesianChart.AxisX>
+
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Salary ($)" 
+                          LabelFormatter="{Binding SalaryFormatter}" 
+                          FontSize="14" 
+                          Foreground="#2C3E50"/>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </StackPanel>
+
+                </Border>
+            </Grid>
+        </Grid>
+</UserControl>

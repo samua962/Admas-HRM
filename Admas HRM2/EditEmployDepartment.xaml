@@ -1,0 +1,379 @@
+﻿<UserControl x:Class="Admas_HRM2.EditEmployDepartment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Admas_HRM2"
+             mc:Ignorable="d" 
+                          d:DesignHeight="1450" d:DesignWidth="800"
+             Background="White">
+
+    <UserControl.Resources>
+        <!-- Button Style -->
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2980B9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#bee6fd"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="5">
+                            <Grid>
+                                <ToggleButton x:Name="ToggleButton"
+                                  Grid.Column="2"
+                                  Focusable="False"
+                                  IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ClickMode="Press">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="10">
+                                                <Path x:Name="Arrow"
+                                          Fill="{TemplateBinding Foreground}"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"
+                                          Data="M0,0 L4,4 8,0 Z"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <ContentPresenter x:Name="ContentSite"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"
+                                      Margin="{TemplateBinding Padding}"
+                                      IsHitTestVisible="False"
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                <TextBox x:Name="PART_EditableTextBox"
+                             Style="{x:Null}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             Margin="{TemplateBinding Padding}"
+                             Focusable="True"
+                             Background="Transparent"
+                             Visibility="Hidden"
+                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                                <Popup x:Name="Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                                    <Border Background="White"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                        Padding="10,5">
+                                        <ScrollViewer Margin="1">
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style x:Key="describsion" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                     BorderBrush="{TemplateBinding BorderBrush}" 
+                     BorderThickness="{TemplateBinding BorderThickness}" 
+                     CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#2980b9" Offset="0"/>
+            <GradientStop Color="#6dd5fa" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+        <StackPanel>
+
+            <Border Background="{StaticResource HeaderGradient}" CornerRadius="5" Padding="15" Margin="20">
+                <TextBlock Text="Employee Management" FontSize="26" FontWeight="Bold" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            </Border>
+            <Grid Background="White" Margin="200,40,200,0">
+                <!-- Grid and Row Definitions -->
+                <Grid.RowDefinitions>
+                    <!-- Existing Fields -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Title -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- First Name & Last Name -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Department & Employee ID -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Role & Gender -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Profile Image -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Birth Date & Joining Date -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- New Fields Below Existing Fields -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Username -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Education -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Salary -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Status -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Hire Type -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Description -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Contact Person -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- File Attachment -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Save and Cancel -->
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Title -->
+                <TextBlock Text="Edit Employee" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2" Margin="0,0,0,20" Grid.Row="0" Foreground="Black"/>
+
+                <!-- First Name -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="First Name:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtFirstName" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14" />
+                </StackPanel>
+
+                <!-- Last Name -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Last Name:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtLastName" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+               
+
+                <!-- Employee ID -->
+                <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Employee ID:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtEmployeeID" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Role -->
+                <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Position:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cmbRole" Height="40" VerticalAlignment="Center" BorderThickness="1" Margin="0,0,10,0" Background="#F0F0F0" FontSize="14">
+                        <ComboBoxItem Content="Manager"/>
+                        <ComboBoxItem Content="Employee"/>
+                        <ComboBoxItem Content="Intern"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Gender -->
+                <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Gender:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cmbGender" Height="40" VerticalAlignment="Center" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14">
+                        <ComboBoxItem Content="Male"/>
+                        <ComboBoxItem Content="Female"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Title -->
+                <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Title:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cmbTitle" Height="40" Margin="0,0,10,0" VerticalAlignment="Center" BorderThickness="1" Background="#F0F0F0" FontSize="14">
+                        <ComboBoxItem Content="Mr."/>
+                        <ComboBoxItem Content="Ms."/>
+                        <ComboBoxItem Content="Dr."/>
+                        <ComboBoxItem Content="Prof."/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Profile Image -->
+                <StackPanel Grid.Row="11" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Profile Image:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <Button x:Name="btnUploadImage" Content="Upload Image" Height="50" Foreground="Gray" VerticalAlignment="Center" Margin="0,0,10,0" Padding="15" BorderThickness="1" Style="{StaticResource MyButtonStyle}" Background="#F0F0F0" FontSize="14" Click="btnUploadImage_Click"/>
+                    <TextBlock x:Name="image" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Birth Date -->
+                <StackPanel Grid.Row="6" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Date of Birth:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <DatePicker x:Name="dpDOB" Height="40" VerticalAlignment="Center" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Joining Date -->
+                <StackPanel Grid.Row="6" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Joining Date:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <DatePicker x:Name="dpJoiningDate" Height="40" Margin="0,0,10,0" VerticalAlignment="Center" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Username -->
+                <StackPanel Grid.Row="7" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Username:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtUsername" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Education -->
+                <StackPanel Grid.Row="7" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Education:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtEducation" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Hire Type -->
+                <StackPanel Grid.Row="5" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Hire Type:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cmbHireType" Height="40" Margin="0,0,10,0" VerticalAlignment="Center" BorderThickness="1" Background="#F0F0F0" FontSize="14">
+                        <ComboBoxItem Content="Full-Time"/>
+                        <ComboBoxItem Content="Part-Time"/>
+                        <ComboBoxItem Content="Contract"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Salary -->
+                <StackPanel Grid.Row="8" Grid.Column="0" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Salary:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtSalary" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Status -->
+                <StackPanel Grid.Row="8" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Status:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cmbStatus" Height="40" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0"
+              BorderThickness="1" Background="#F0F0F0" FontSize="14">
+                        <ComboBoxItem Content="Active"/>
+                        <ComboBoxItem Content="Inactive"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Description -->
+                <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,20" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Description:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtDescription" Height="100" VerticalAlignment="Center" Padding="10" Margin="0,0,10,0" BorderThickness="1" Background="#F0F0F0" FontSize="14" Style="{StaticResource describsion}" AcceptsReturn="True"/>
+                </StackPanel>
+
+                <!-- Contact Person Container -->
+                <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Contact" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                    <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Background="#F0F0F0">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="Email:" VerticalAlignment="Center" Margin="0,0,10,0" Width="120"/>
+                                <TextBox x:Name="txtContactEmail" Height="40" VerticalAlignment="Center" Margin="0,0,10,0" Padding="10" Width="200" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="Phone Number:" VerticalAlignment="Center" Margin="0,0,10,0" Width="120"/>
+                                <TextBox x:Name="txtPhoneNumber" Height="40" VerticalAlignment="Center" Margin="0,0,10,0" Padding="10" Width="200" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0,0,10,0" Width="120"/>
+                                <TextBox x:Name="txtAddress" Height="40" VerticalAlignment="Center" Margin="0,0,10,0" Padding="10" Width="200" BorderThickness="1" Background="#F0F0F0" FontSize="14"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- File Attachment -->
+                <StackPanel Grid.Row="11" Grid.Column="1" Margin="0,0,0,20" VerticalAlignment="Center">
+                    <TextBlock Text="Document:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <Button x:Name="btnAttachFile" Content="Choose File" Height="50" VerticalAlignment="Center" Margin="0,0,10,0" Padding="15" BorderThickness="1" Style="{StaticResource MyButtonStyle}" Foreground="Gray" Background="#F0F0F0" FontSize="14" Click="btnAttachFile_Click"/>
+                    <TextBlock x:Name="file" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Save and Cancel Buttons -->
+                <StackPanel Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Update" Width="120" Height="40" Cursor="Hand" Foreground="White" Margin="10" Padding="10,5"  BorderBrush="DodgerBlue" BorderThickness="1" FontSize="14" Click="UpdateEmployee_Click" Style="{StaticResource MyButtonStyle}"/>
+                    <Button Content="Cancel" Width="120" Height="40" Cursor="Hand" Foreground="White" Background="Gray" Margin="10" Padding="10,5" BorderBrush="Gray" BorderThickness="1" FontSize="14" Click="btnCancel_Click" Style="{StaticResource MyButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

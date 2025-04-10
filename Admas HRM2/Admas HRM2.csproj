@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Admas_HRM2</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icon\c.ico" />
+    <None Remove="Icon\icons8-admin-50.png" />
+    <None Remove="Icon\icons8-attendance-50.png" />
+    <None Remove="Icon\icons8-dashboard-50.png" />
+    <None Remove="Icon\icons8-department-48.png" />
+    <None Remove="Icon\icons8-employees-50.png" />
+    <None Remove="Icon\icons8-logout-45.png" />
+    <None Remove="Icon\icons8-male-user-50.png" />
+    <None Remove="Icon\icons8-payroll-50.png" />
+    <None Remove="Icon\icons8-report-50.png" />
+    <None Remove="Icon\icons8-setting-50.png" />
+    <None Remove="Icon\windowlogo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ADO.Net.Client.Core" Version="1.4.5" />
+    <PackageReference Include="Angular.Material" Version="1.1.12" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon\c.ico" />
+    <Resource Include="Icon\icons8-admin-50.png" />
+    <Resource Include="Icon\icons8-attendance-50.png" />
+    <Resource Include="Icon\icons8-dashboard-50.png" />
+    <Resource Include="Icon\icons8-department-48.png" />
+    <Resource Include="Icon\icons8-employees-50.png" />
+    <Resource Include="Icon\icons8-logout-45.png" />
+    <Resource Include="Icon\icons8-male-user-50.png" />
+    <Resource Include="Icon\icons8-payroll-50.png" />
+    <Resource Include="Icon\icons8-report-50.png" />
+    <Resource Include="Icon\icons8-setting-50.png" />
+    <Resource Include="Icon\windowlogo.ico" />
+  </ItemGroup>
+
+</Project>
